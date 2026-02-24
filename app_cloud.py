@@ -131,6 +131,10 @@ def transform_content(content_html: str) -> str:
     for tag in list(soup.find_all("step-divider")):
         tag.replace_with(soup.new_tag("hr", attrs={"class": "step-divider"}))
 
+    # Разворачиваем все спойлеры (details) по умолчанию
+    for tag in soup.find_all("details"):
+        tag["open"] = ""
+
     for tag in soup.find_all(["h1", "h2", "h3", "h4"]):
         classes = [c for c in tag.get("class", []) if "admin-styles" not in c]
         if classes:
